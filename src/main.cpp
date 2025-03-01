@@ -1,33 +1,8 @@
 #include <Arduino.h>
 
-// Definición de frecuencias de notas musicales (en Hz)
-#define DO    261   // Do (C4)
-#define RE    294   // Re (D4)
-#define MI    330   // Mi (E4)
-#define FA    349   // Fa (F4)
-#define SOL   392   // Sol (G4)
-#define LA    440   // La (A4)
-#define SI    493   // Si (B4)
-#define DO2   523   // Do (C5) (Do+)
-
-// pines botones
-int bot1 = 2;
-int bot2 = 3;
-int bot3 = 4;
-int bot4 = 5;
-int bot5 = 6;
-int bot6 = 7;
-int bot7 = 9;
-int bot8 = 10;
-
-// pin boton grabar
-int botRecord = 11;
 bool grabando = false;
 
-// pin reproducir
-int botReproducir = 12;
-
-// estado botones
+// estado previo botones/ actual
 int botEstado = 0;
 
 // variable que ayuda a apagar buzzer
@@ -37,9 +12,11 @@ const int tamanoMaxCancion = 10;
 int tamanoCancion = 0;
 int cancion[tamanoMaxCancion];
 
-int notas[] =   { DO,  RE,  MI,  FA, SOL,  LA,  SI,  DO2};
-int botones[] = {bot1,bot2,bot3,bot4,bot5,bot6,bot7,bot8, botRecord, botReproducir};
+              //  DO     RE    MI   FA    SOL   LA   SI     DO+
+int notas[] =   { 261,  294,  330,  349, 392,  440,  493,  523};
 
+//pines de botones: bot1,bot2,bot3,bot4,bot5,bot6,bot7,bot8, botRecord, botReproducir
+int botones[] =    {  2,   3,  4,   5,  6,   7,   9,   10,     11 ,        12};
 // pin buzzer
 int buzzerPin = 8;
 
@@ -78,7 +55,7 @@ void loop() {
           grabar(notas[i]);
         }
           tone(buzzerPin, notas[i],100);
-          // delay(300);
+          delay(300);
           break;
       }
       // bandera grabar
@@ -96,7 +73,7 @@ void loop() {
           tone(buzzerPin, cancion[f], 200);
           delay(300); 
         }
-        // delay(1000);
+        break;
       }
     }
 
